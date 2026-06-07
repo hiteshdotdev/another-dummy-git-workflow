@@ -12,22 +12,21 @@ function format(value) {
   if (value === 'Error') return 'Error'
   const num = Number(value)
   if (!isFinite(num)) return 'Error'
-  // Avoid floating-point noise like 0.1 + 0.2 = 0.30000000000000004
   const rounded = Math.round((num + Number.EPSILON) * 1e10) / 1e10
   return String(rounded)
 }
 
 export default function App() {
   const [display, setDisplay] = useState('0')
-  const [prev, setPrev] = useState(null)        // stored operand
+  const [prev, setPrev] = useState(null)        
   const [operator, setOperator] = useState(null)
-  const [overwrite, setOverwrite] = useState(true) // next digit replaces display
+  const [overwrite, setOverwrite] = useState(true) 
 
   const inputDigit = useCallback((digit) => {
     setDisplay((d) => {
       if (overwrite) return digit
       if (d === '0') return digit
-      if (d.replace('-', '').replace('.', '').length >= 15) return d // length cap
+      if (d.replace('-', '').replace('.', '').length >= 15) return d 
       return d + digit
     })
     setOverwrite(false)
@@ -95,7 +94,7 @@ export default function App() {
     })
   }, [overwrite])
 
-  // Keyboard support
+  
   useEffect(() => {
     const onKey = (e) => {
       const { key } = e
